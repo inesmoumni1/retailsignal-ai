@@ -123,7 +123,7 @@ const SCENARIOS = {
   }
 };
 
-export default function RetailSignalAI() {
+export default function App() {
   const [active, setActive] = useState("zeroPlastic");
   const [copied, setCopied] = useState(false);
   const [animKey, setAnimKey] = useState(0);
