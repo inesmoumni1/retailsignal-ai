@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inès Moumni</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F8F4EE;
+  --warm:#FDFBF8;
+  --dark:#16120E;
+  --charcoal:#1E1A16;
+  --gold:#B8703A;
+  --gold-l:#D4956A;
+  --muted:#7A6E64;
+  --border:rgba(184,112,58,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--dark);font-family:'DM Sans',sans-serif;line-height:1.7;overflow-x:hidden;}
+a,button{cursor:pointer;}
+
+/* CURSOR */
+.cur{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:multiply;}
+.cur-r{width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:.45;transition:width .3s,height .3s,opacity .3s;}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1.6rem 6%;display:flex;justify-content:space-between;align-items:center;transition:background .4s;}
+nav.sc{background:rgba(248,244,238,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.n-logo{font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:3px;text-decoration:none;color:var(--dark);text-transform:uppercase;}
+.n-links a{font-size:.67rem;text-transform:uppercase;letter-spacing:2.5px;text-decoration:none;color:var(--muted);margin-left:2.5rem;transition:color .3s;}
+.n-links a:hover{color:var(--gold);}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;background:var(--warm);padding:9rem 10% 5rem;}
+.h-name-row{display:flex;align-items:center;gap:2.5rem;margin-bottom:1.8rem;opacity:0;animation:sL .9s .3s forwards;}
+.h-name{font-family:'Playfair Display',serif;font-size:clamp(3.2rem,5.5vw,5.8rem);font-weight:700;line-height:1.0;}
+.h-name .surname{color:var(--gold);font-style:italic;}
+.h-avatar{width:110px;height:110px;border-radius:4px;overflow:hidden;flex-shrink:0;border:1px solid var(--border);filter:sepia(4%) contrast(1.02);}
+.h-avatar img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.h-tag{font-size:clamp(.9rem,1.4vw,1.15rem);font-weight:300;color:var(--muted);margin-bottom:3.5rem;min-height:1.8em;opacity:0;animation:fU .8s 1s forwards;}
+.h-tag .tc{color:var(--gold);}
+.h-chips{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:3.5rem;opacity:0;animation:fU .8s 1.7s forwards;}
+.chip{padding:.38rem 1rem;border:1px solid var(--border);font-size:.68rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);transition:all .3s;}
+.chip:hover{background:var(--gold);color:#fff;border-color:var(--gold);}
+.h-cta{display:inline-flex;align-items:center;gap:.8rem;text-decoration:none;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--dark);border-bottom:1px solid var(--gold);padding-bottom:.4rem;width:fit-content;opacity:0;animation:fU .8s 2s forwards;transition:color .3s;}
+.h-cta:hover{color:var(--gold);}
+.h-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:4rem;border-top:1px solid var(--border);opacity:0;animation:fU .8s 2.2s forwards;}
+.h-stat{padding:2rem 0 0;border-right:1px solid var(--border);}
+.h-stat:last-child{border-right:none;}
+.h-stat:not(:first-child){padding-left:2rem;}
+.h-stat-n{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);display:block;}
+.h-stat-l{font-size:.58rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-top:.3rem;}
+
+/* ── SHARED ── */
+.s-label{font-size:.62rem;text-transform:uppercase;letter-spacing:4px;color:var(--gold);margin-bottom:1rem;display:block;}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s;}
+.rv.on{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+section{padding:8rem 10%;}
+
+/* ── EDUCATION ── */
+#education{background:var(--cream);}
+.edu-grid{display:grid;grid-template-columns:240px 1fr;gap:5rem;margin-top:3.5rem;}
+.edu-sticky{position:sticky;top:7rem;transition:opacity .3s;}
+.edu-sticky .s-label{font-size:.58rem;letter-spacing:3px;color:var(--muted);margin-bottom:.6rem;}
+.edu-sticky h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,3.5vw,3rem);font-weight:400;line-height:1.15;}
+.edu-sticky h2 em{font-style:italic;color:var(--gold);}
+.edu-items{display:flex;flex-direction:column;gap:0;}
+.edu-item{padding:2.2rem 0;border-bottom:1px solid var(--border);}
+.edu-item:last-child{border-bottom:none;}
+.edu-date{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.edu-item h3{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:.25rem;}
+.edu-item .sub{font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:.7rem;}
+.edu-item p{font-weight:300;font-size:.87rem;color:var(--muted);line-height:1.85;}
+
+/* ── EXPERIENCE ── */
+#experience{background:var(--warm);}
+.exp-grid{display:grid;grid-template-columns:240px 1fr;gap:5rem;margin-top:3.5rem;}
+.exp-sticky{position:sticky;top:7rem;transition:opacity .3s;}
+.exp-sticky .s-label{font-size:.58rem;letter-spacing:3px;color:var(--muted);margin-bottom:.6rem;}
+.exp-sticky h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,3.5vw,3rem);font-weight:400;line-height:1.15;}
+.exp-sticky h2 em{font-style:italic;color:var(--gold);}
+.exp-items{display:flex;flex-direction:column;gap:0;}
+.exp-item{padding:2.5rem 0;border-bottom:1px solid var(--border);}
+.exp-item:last-child{border-bottom:none;}
+.exp-date{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.exp-item h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:.2rem;}
+.exp-item .org{font-size:.73rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:.8rem;}
+.exp-item p{font-weight:300;font-size:.87rem;color:var(--muted);line-height:1.85;margin-bottom:.6rem;}
+.exp-role{font-size:.73rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:.8rem;}
+.exp-list{list-style:none;margin:.8rem 0;display:flex;flex-direction:column;gap:.5rem;}
+.exp-list li{font-weight:300;font-size:.87rem;color:var(--muted);line-height:1.75;padding-left:1.4rem;position:relative;}
+.exp-list li::before{content:'→';color:var(--gold);position:absolute;left:0;font-size:.75rem;}
+.exp-list li strong{color:var(--dark);font-weight:500;}
+.exp-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem;}
+.tag{font-size:.62rem;letter-spacing:1.2px;text-transform:uppercase;padding:.28rem .75rem;background:rgba(184,112,58,.08);color:var(--gold);}
+.exp-kpis{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem;}
+.kpi{font-size:.65rem;letter-spacing:1px;text-transform:uppercase;padding:.25rem .7rem;background:rgba(184,112,58,.08);color:var(--gold);}
+
+/* Welcome Kit grid */
+.kit-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.2rem;}
+.kit-cell{overflow:hidden;border-radius:2px;background:#f0ede9;}
+.kit-cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
+.kit-cell:hover img{transform:scale(1.03);}
+
+/* IG feed */
+.ig-feed{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1rem;}
+.ig-cell{overflow:hidden;aspect-ratio:1;border-radius:2px;}
+.ig-cell img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.ig-cell:hover img{transform:scale(1.05);}
+.ig-blog{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem;}
+.blog-cell{background:var(--cream);padding:1.2rem 1.4rem;border-left:2px solid var(--gold);}
+.blog-cell .bn{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);}
+.blog-cell .bl{font-size:.63rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-top:.3rem;}
+
+/* ── PROJECTS ── */
+#projects{background:var(--cream);padding:8rem 10%;}
+#projects h2.sec-h{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,3.5vw,3rem);font-weight:400;margin-bottom:4rem;}
+#projects h2.sec-h em{font-style:italic;color:var(--gold);}
+
+/* RetailSignal */
+.rs-wrap{background:var(--charcoal);padding:4rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+.rs-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(184,112,58,.07) 0%,transparent 70%);pointer-events:none;}
+.rs-top{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:start;margin-bottom:2.5rem;}
+.rs-text .s-label{color:var(--gold-l);}
+.rs-text h3{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;line-height:1.1;margin-bottom:1.2rem;}
+.rs-text h3 em{font-style:italic;color:var(--gold);}
+.rs-text p{font-weight:300;font-size:.87rem;color:rgba(255,255,255,.5);line-height:1.9;margin-bottom:.8rem;}
+.rs-feats{list-style:none;margin:0;padding-top:.5rem;}
+.rs-feats li{display:flex;gap:.8rem;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.8rem;color:rgba(255,255,255,.38);transition:color .3s;cursor:default;}
+.rs-feats li:hover{color:rgba(255,255,255,.82);}
+.rs-feats li::before{content:'→';color:var(--gold);flex-shrink:0;}
+.rs-btn{display:inline-block;margin-top:0;padding:.85rem 2.2rem;background:var(--gold);color:#fff;text-decoration:none;font-size:.68rem;letter-spacing:2.5px;text-transform:uppercase;transition:opacity .3s,transform .3s;}
+.rs-btn:hover{opacity:.85;transform:translateX(4px);}
+@media(max-width:1100px){.rs-top{grid-template-columns:1fr;}}
+.live-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(40,200,80,.1);border:1px solid rgba(40,200,80,.25);padding:.15rem .6rem;border-radius:20px;font-size:.58rem;letter-spacing:1.5px;color:rgba(40,200,80,.9);margin-left:.6rem;vertical-align:middle;}
+.live-dot{width:6px;height:6px;background:#28C840;border-radius:50%;animation:livePulse 1.8s ease-in-out infinite;flex-shrink:0;}
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(40,200,80,.5);opacity:1;}50%{box-shadow:0 0 0 5px rgba(40,200,80,0);opacity:.7;}}border:1px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.55);transform:perspective(900px) rotateY(-3deg) rotateX(1deg);transition:transform .5s;width:100%;}
+.browser:hover{transform:perspective(900px) rotateY(0) rotateX(0);}
+.br-bar{background:#1A1714;padding:.7rem 1rem;display:flex;align-items:center;gap:.45rem;border-bottom:1px solid rgba(255,255,255,.05);}
+.br-dot{width:9px;height:9px;border-radius:50%;}
+.br-url{flex:1;background:rgba(255,255,255,.04);padding:.25rem .7rem;border-radius:3px;font-size:.62rem;color:rgba(255,255,255,.25);font-family:monospace;margin:0 .5rem;}
+.br-body{padding:0;overflow:hidden;}
+.br-body img{width:100%;display:block;object-fit:cover;}
+
+/* Hammam */
+.hg-wrap{display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:center;padding-top:4rem;border-top:1px solid var(--border);}
+.hg-img{position:relative;}
+.hg-img img{width:100%;display:block;filter:drop-shadow(0 20px 50px rgba(0,0,0,.12));transition:transform .1s ease-out;}
+.hg-text .s-label{margin-top:0;}
+.hg-text h3{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:400;line-height:1.15;margin-bottom:1.2rem;}
+.hg-text h3 em{font-style:italic;color:var(--gold);}
+.hg-text p{font-weight:300;font-size:.87rem;color:var(--muted);line-height:1.9;margin-bottom:.8rem;}
+.sku-g{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1.2rem;}
+.sku{padding:.7rem 1rem;background:var(--warm);font-size:.6rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--muted);border-left:2px solid var(--gold);}
+
+/* ── CONTACT ── */
+#contact{background:var(--dark);text-align:center;position:relative;overflow:hidden;padding:9rem 5%;}
+#contact::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(184,112,58,.07) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;}
+.ct-label{font-size:.62rem;text-transform:uppercase;letter-spacing:4px;color:var(--gold);margin-bottom:1.5rem;display:block;}
+.ct-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:400;color:#fff;line-height:1.05;margin-bottom:1.5rem;}
+.ct-title em{font-style:italic;color:var(--gold);}
+.ct-sub{font-weight:300;color:rgba(255,255,255,.38);font-size:.88rem;max-width:480px;margin:0 auto 3.5rem;line-height:1.9;}
+.ct-btn{display:inline-block;padding:1.1rem 3.2rem;background:var(--gold);color:#fff;text-decoration:none;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;animation:pulse 2.5s ease-in-out infinite;position:relative;z-index:1;}
+.ct-links{margin-top:3rem;display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;}
+.ct-links a{font-size:.66rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .3s;}
+.ct-links a:hover{color:var(--gold);}
+.ft{margin-top:6rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.06);font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.15);}
+
+@keyframes fU{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sL{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes sR{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(184,112,58,.4)}50%{box-shadow:0 0 0 14px rgba(184,112,58,0)}}
+
+@media(max-width:900px){
+  .rs-wrap{grid-template-columns:1fr}
+  .hg-wrap{grid-template-columns:1fr}
+  .edu-grid,.exp-grid{grid-template-columns:1fr}
+  .n-links{display:none}
+  .kit-grid{grid-template-columns:1fr 1fr}
+  .ig-feed{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .h-stats{grid-template-columns:repeat(2,1fr)}
+  .h-stat{border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 1rem;}
+  .h-stat:last-child{border-bottom:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav id="nav">
+  <a class="n-logo" href="#">Inès Moumni</a>
+  <div class="n-links">
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <div class="h-name-row">
+    <h1 class="h-name">Inès <span class="surname">Moumni</span></h1>
+    <div class="h-avatar">
+      <img src="https://github.com/inesmoumni1/portfolio-assets/raw/main/photo%20de%20profil.png" alt="Inès Moumni">
+    </div>
+  </div>
+  <div class="h-tag" id="typed"><span class="tc">|</span></div>
+  <div class="h-chips">
+    <span class="chip">Marketing</span>
+    <span class="chip">Data Analysis</span>
+    <span class="chip">Product</span>
+    <span class="chip">React.js</span>
+    <span class="chip">Scrum Master</span>
+    <span class="chip">GenAI</span>
+  </div>
+  <a href="#experience" class="h-cta">Explore my work →</a>
+  <div class="h-stats">
+    <div class="h-stat"><span class="h-stat-n">+2 063%</span><div class="h-stat-l">Organic growth generated</div></div>
+    <div class="h-stat"><span class="h-stat-n">60+</span><div class="h-stat-l">B2B partners managed</div></div>
+    <div class="h-stat"><span class="h-stat-n">600+</span><div class="h-stat-l">Consumer data points</div></div>
+    <div class="h-stat"><span class="h-stat-n">€20k</span><div class="h-stat-l">Funding secured</div></div>
+  </div>
+</section>
+
+<!-- ══════════ EDUCATION ══════════ -->
+<section id="education">
+  <div class="edu-grid">
+    <div class="edu-sticky rv d1">
+      <span class="s-label">Academic Background</span>
+      <h2>What I've<br><em>Learned</em></h2>
+    </div>
+    <div class="edu-items">
+      <div class="edu-item rv d2">
+        <div class="edu-date">2026 — 2027 (Planned)</div>
+        <h3>SKEMA Business School</h3>
+        <div class="sub">MS Marketing, Data & E-commerce · Future Apprentice</div>
+        <p>Specialization at the intersection of marketing strategy, data analytics, and digital commerce.</p>
+      </div>
+      <div class="edu-item rv d3">
+        <div class="edu-date">Graduated — First Class Honors</div>
+        <h3>Toulouse Business School (TBS)</h3>
+        <div class="sub">MSc International Business & Master in Marketing</div>
+        <p>Double degree (Barcelona & Toulouse). Developed a strong foundation in global market dynamics and brand management.</p>
+        <p style="margin-top:10px;font-weight:500;font-size:.87rem;color:var(--dark);"><strong>Master Thesis:</strong> "Partnering for Impact: How Non-Governmental Organizations Support Multinational Enterprises in Achieving Sustainable Development Goals." — Presented at the EIBA International Conference in Lisbon. Currently under publication.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EXPERIENCE ══════════ -->
+<section id="experience">
+  <div class="exp-grid">
+    <div class="exp-sticky rv">
+      <span class="s-label">Professional Experience</span>
+      <h2>What I've<br><em>Built</em></h2>
+    </div>
+    <div class="exp-items">
+
+      <!-- McCormick -->
+      <div class="exp-item rv d1">
+        <div class="exp-date">MAR — APR 2025</div>
+        <h3>McCormick</h3>
+        <div class="exp-role">Graduate Program — National Finalist • Top 10%</div>
+        <p>Selected among the top 10% of national candidates to solve a strategic business case for the Marketing Leadership Team.</p>
+        <ul class="exp-list">
+          <li><strong>Data Mining:</strong> Processed 600+ consumer data points to identify growth levers and market opportunities.</li>
+          <li><strong>Strategic Impact:</strong> Delivered high-level recommendations to the Board at Avignon HQ, influencing the brand's local roadmap.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">600+ DATA POINTS</span>
+          <span class="tag">TOP 10%</span>
+          <span class="tag">EXECUTIVE PITCH</span>
+        </div>
+      </div>
+
+      <!-- Planète Mer -->
+      <div class="exp-item rv d2">
+        <div class="exp-date">SEPT 2022 — DEC 2023</div>
+        <h3>Planète Mer</h3>
+        <div class="exp-role">Project Manager & B2B Partnerships • Marine NGO</div>
+        <p>Full 360° marketing and partnership role, bridging the gap between corporate funding and environmental impact.</p>
+        <ul class="exp-list">
+          <li><strong>Partnerships:</strong> Secured €20k in funding and managed 60+ B2B accounts.</li>
+          <li><strong>Tech & UX:</strong> Orchestrated UAT testing for the new platform and managed CRM newsletters.</li>
+          <li><strong>Multimedia:</strong> Produced high-impact corporate video content (Full production cycle).</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">60+ PARTNERS</span>
+          <span class="tag">€20K FUNDING</span>
+          <span class="tag">UAT TESTING</span>
+          <span class="tag">300+ ATTENDEES</span>
+        </div>
+        <div class="kit-grid">
+          <div class="kit-cell">
+            <img src="https://github.com/inesmoumni1/portfolio-assets/raw/main/welcome%20kit%20plan%C3%A8te%20mer%20-%201.png" alt="Welcome Kit Planète Mer - couverture">
+          </div>
+          <div class="kit-cell">
+            <img src="https://github.com/inesmoumni1/portfolio-assets/raw/main/welcome%20kit%20plan%C3%A8te%20mer%20-%202.png" alt="Welcome Kit Planète Mer - contenu">
+          </div>
+        </div>
+        <p style="font-size:.62rem;text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-top:2rem;margin-bottom:.8rem;">Corporate Storytelling: From Print to Motion</p>
+        <a href="https://www.youtube.com/watch?v=e2LvnveogIA" target="_blank" style="display:block;position:relative;text-decoration:none;border-radius:8px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.1);margin-top:.5rem;" onmouseenter="this.querySelector('.play-overlay').style.background='rgba(0,0,0,.55)'" onmouseleave="this.querySelector('.play-overlay').style.background='rgba(0,0,0,.35)'">
+          <img src="https://github.com/inesmoumni1/portfolio-assets/raw/main/Vid%C3%A9o%20corporate.png" alt="Vidéo corporate Planète Mer" style="width:100%;display:block;">
+          <div class="play-overlay" style="position:absolute;inset:0;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;transition:background .3s;">
+            <div style="width:64px;height:64px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(184,112,58,.4);">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M2 1l16 10L2 21V1z" fill="#fff"/></svg>
+            </div>
+          </div>
+        </a>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:.9rem;font-style:italic;font-weight:300;">Produced, filmed, and edited to align with Planète Mer's branding strategy.</p>
+      </div>
+
+      <!-- Hopper -->
+      <div class="exp-item rv d2">
+        <div class="exp-date">Mar – Apr 2023</div>
+        <h3>SESAME Consulting <span style="font-family:'DM Sans';font-size:.8rem;font-weight:300;color:var(--muted)">via TBS Education</span></h3>
+        <div class="exp-role">Scrum Master & Strategy Consultant • Hopper</div>
+        <p>Orchestrated 2 Agile Scrum sprints for a cross-functional team of 10 junior consultants — backlog, sprint planning, weekly stand-ups and client sprint reviews. Delivered an internationalization strategy for the client.</p>
+        <div class="exp-tags">
+          <span class="tag">Scrum Master</span>
+          <span class="tag">Agile</span>
+          <span class="tag">Sprints</span>
+          <span class="tag">Backlog</span>
+        </div>
+      </div>
+
+      <!-- JNC Nova / beterre -->
+      <div class="exp-item rv d2">
+        <div class="exp-date">Jan 2021 – Jan 2022</div>
+        <h3>JnC Nova / Beterre</h3>
+        <div class="exp-role">Content Strategy & Growth • Early-Stage Startup</div>
+        <p>Built the editorial strategy from scratch for an early-stage eco-responsible startup, driving measurable growth across organic and e-commerce channels.</p>
+        <ul class="exp-list">
+          <li><strong>Exponential Growth:</strong> Engineered and executed a full editorial strategy from scratch, delivering +2,063% organic growth through data-driven storytelling and SEO optimization.</li>
+          <li><strong>E-commerce Launch:</strong> Orchestrated the store launch, achieving 150% of the Day 1 sales target (120 units sold vs. a goal of 80).</li>
+          <li><strong>Creative Direction:</strong> Developed 4 distinct content formats to diversify brand touchpoints and maximize community engagement.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">SEO</span>
+          <span class="tag">Content Strategy</span>
+          <span class="tag">E-commerce</span>
+          <span class="tag">+2 063% Growth</span>
+        </div>
+        <div class="ig-feed">
+          <div class="ig-cell">
+            <img src="https://github.com/inesmoumni1/portfolio-assets/raw/main/post%20beterre%201.jpg" alt="beterre post 1">
+          </div>
+          <div class="ig-cell">
+            <img src="https://github.com/inesmoumni1/portfolio-assets/raw/main/post%20beterre%202.jpg" alt="beterre post 2">
+          </div>
+        </div>
+        <div class="ig-blog">
+          <div class="blog-cell">
+            <div class="bn">+2 063%</div>
+            <div class="bl">Organic reach · content-led growth</div>
+          </div>
+          <div class="blog-cell">
+            <div class="bn">20+</div>
+            <div class="bl">SEO articles published · beterrebox.com</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROJECTS ══════════ -->
+<section id="projects">
+  <span class="s-label rv">Personal Projects</span>
+  <h2 class="sec-h rv">Side projects &<br><em>entrepreneurship</em></h2>
+
+  <!-- RetailSignal -->
+  <div class="rs-wrap rv">
+    <div class="rs-top">
+      <div class="rs-text">
+        <span class="s-label">MVP in production · 2026 <span class="live-badge"><span class="live-dot"></span>Live</span></span>
+        <h3>RetailSignal <em>AI</em></h3>
+        <p>Watching Account Managers lose hours on Google Trends, I built a solo MVP to automate market intelligence.</p>
+      </div>
+      <ul class="rs-feats">
+        <li><strong style="color:rgba(255,255,255,.7)">GenAI Engine:</strong> Uses Gemini 1.5 Pro to turn raw consumer trends into automated Sales Battlecards.</li>
+        <li><strong style="color:rgba(255,255,255,.7)">Business Logic:</strong> Integrated ROI simulators to bridge the gap between consumer insights and stock investment.</li>
+        <li><strong style="color:rgba(255,255,255,.7)">Full-Stack:</strong> Designed, developed, and deployed a scalable end-to-end architecture (React.js / Tailwind / Vercel).</li>
+      </ul>
+    </div>
+    <div class="browser rv d2">
+      <div class="br-bar">
+        <div class="br-dot" style="background:#FF5F57"></div>
+        <div class="br-dot" style="background:#FEBC2E"></div>
+        <div class="br-dot" style="background:#28C840"></div>
+        <div class="br-url">retailsignal-ai.vercel.app</div>
+      </div>
+      <div class="br-body">
+        <img src="https://github.com/inesmoumni1/portfolio-assets/raw/main/RetailSignal%20AI.png" alt="RetailSignal AI screenshot">
+      </div>
+    </div>
+    <div style="margin-top:2rem;text-align:center;">
+      <a href="https://retailsignal-ai.vercel.app/" target="_blank" class="rs-btn">View live demo →</a>
+    </div>
+  </div>
+
+  <!-- Hammam Glow -->
+  <div class="hg-wrap rv">
+    <div class="hg-img">
+      <img id="hgImg" src="https://github.com/inesmoumni1/portfolio-assets/raw/main/Hammam%20box.png" alt="Hammam Glow Box" style="box-shadow:0 20px 40px rgba(0,0,0,.08);">
+    </div>
+    <div class="hg-text rv d2">
+      <span class="s-label">Entrepreneurship · Beauty · Feb – Sept 2024</span>
+      <h3>Hammam <em>Glow</em></h3>
+      <p>Identified a white space in the French wellness market around the hammam ritual. Conducted competitive benchmarking, sourced 4 premium SKUs from Moroccan suppliers, and built a comprehensive financial feasibility model.</p>
+      <p style="font-size:.82rem;color:var(--muted);font-style:italic;">Strategic pivot following a rigorous profitability audit — prioritizing long-term financial viability over immediate market entry.</p>
+      <div class="sku-g">
+        <div class="sku">Argan Oil</div>
+        <div class="sku">Savon Beldi</div>
+        <div class="sku">Kessa Glove</div>
+        <div class="sku">Ghassoul Clay</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section id="contact">
+  <span class="ct-label rv">Available from September 2026</span>
+  <h2 class="ct-title rv">Looking for my<br><em>next adventure</em></h2>
+  <p class="ct-sub rv">Seeking a 12-month work-study contract (alternance) starting September 2026 — ready for full immersion from day one.</p>
+  <a href="mailto:moumni.iness@gmail.com?subject=Contact via Portfolio&body=Bonjour Inès," class="ct-btn rv">Get in touch</a>
+  <div class="ct-links rv">
+    <a href="mailto:moumni.iness@gmail.com">moumni.iness@gmail.com</a>
+    <a href="https://retailsignal-ai.vercel.app/" target="_blank">RetailSignal AI</a>
+    <a href="https://www.linkedin.com/in/in%C3%A8s-moumni/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/inesmoumni1/portfolio-assets/raw/main/Resume.pdf" target="_blank">Download CV</a>
+  </div>
+  <div class="ft rv">© 2026 Inès Moumni</div>
+</section>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+(function animR(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.transform=`translate(${rx-18}px,${ry-18}px)`;requestAnimationFrame(animR);})();
+document.querySelectorAll('a,button,.chip').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{curR.style.width='58px';curR.style.height='58px';curR.style.opacity='.8';});
+  el.addEventListener('mouseleave',()=>{curR.style.width='36px';curR.style.height='36px';curR.style.opacity='.45';});
+});
+
+// Nav scroll
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',window.scrollY>80));
+
+// Typing animation
+const phrases=["From Insight to Impact.","Marketing instinct, proven by data.","Building things that actually work."];
+let pi=0,ci=0,del=false;
+const tel=document.getElementById('typed');
+function type(){
+  const p=phrases[pi];
+  tel.innerHTML=p.slice(0,ci)+'<span class="tc">|</span>';
+  if(!del&&ci<p.length){ci++;setTimeout(type,58);}
+  else if(!del){setTimeout(()=>{del=true;type();},2400);}
+  else if(del&&ci>0){ci--;setTimeout(type,28);}
+  else{del=false;pi=(pi+1)%phrases.length;setTimeout(type,350);}
+}
+setTimeout(type,1200);
+
+// Scroll reveal
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on');}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// Sticky fade on overlap
+function updateStickyOpacity(){
+  document.querySelectorAll('.edu-sticky, .exp-sticky').forEach(sticky => {
+    if(!sticky.classList.contains('on')) return;
+    const stickyR = sticky.getBoundingClientRect();
+    const items = sticky.closest('.edu-grid, .exp-grid').querySelectorAll('.edu-item, .exp-item');
+    let overlap = false;
+    items.forEach(item => {
+      const itemR = item.getBoundingClientRect();
+      if(itemR.top < stickyR.bottom - 20 && itemR.bottom > stickyR.top &&
+         itemR.left < stickyR.right && itemR.right > stickyR.left){
+        overlap = true;
+      }
+    });
+    sticky.style.opacity = overlap ? '0.12' : '1';
+  });
+}
+window.addEventListener('scroll', updateStickyOpacity, {passive:true});
+setTimeout(updateStickyOpacity, 800);
+const hgSec=document.getElementById('projects');
+const hgImg=document.getElementById('hgImg');
+if(hgImg){
+  const hgWrap=hgImg.closest('.hg-wrap');
+  hgWrap.addEventListener('mousemove',e=>{
+    const r=hgWrap.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)/r.width;
+    const y=(e.clientY-r.top-r.height/2)/r.height;
+    hgImg.style.transform=`translate(${x*10}px,${y*-14}px)`;
+  });
+  hgWrap.addEventListener('mouseleave',()=>{hgImg.style.transition='transform .8s ease';hgImg.style.transform='translate(0,0)';});
+  hgWrap.addEventListener('mouseenter',()=>{hgImg.style.transition='transform .1s ease-out';});
+}
+</script>
+</body>
+</html>
